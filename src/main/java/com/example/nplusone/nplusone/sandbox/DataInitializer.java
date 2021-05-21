@@ -23,7 +23,7 @@ public class DataInitializer {
         this.aRepository = aRepository;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public List<A> prepareData(int count) {
         return aRepository.saveAll(createAList(count));
     }

@@ -23,7 +23,7 @@ public class DataFetchSandbox {
         this.cRepository = cRepository;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public List<A> fetchDataNPlusOneProblem() {
         List<A> listOfA = aRepository.findAll();
 
@@ -46,7 +46,7 @@ public class DataFetchSandbox {
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public List<A> fetchDataWithoutNPlusOneProblem() {
         // Fetching main object list
         List<A> listOfA = aRepository.findWithB();
