@@ -25,17 +25,17 @@ public class DataFetchSandbox {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<A> fetchDataNPlusOneProblem() {
-        List<A> all = aRepository.findAll();
+        List<A> listOfA = aRepository.findAll();
 
         // No related data in L1 cache so additional selects will be fired
-        fakeInitializationWhichCouldFireAdditionalSelects(all);
+        fakeInitializationWhichCouldFireAdditionalSelects(listOfA);
 
-        return all;
+        return listOfA;
     }
 
     // can be for example mapping entity to dto
-    private void fakeInitializationWhichCouldFireAdditionalSelects(List<A> all) {
-        for (A a : all) {
+    private void fakeInitializationWhichCouldFireAdditionalSelects(List<A> listOfA) {
+        for (A a : listOfA) {
             for (B b : a.getListOfB()) {
                 for (C c : b.getListOfC()) {
                     for (D d : c.getListOfD()) {
