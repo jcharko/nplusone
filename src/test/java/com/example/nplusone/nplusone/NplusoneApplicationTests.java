@@ -52,6 +52,7 @@ class NplusoneApplicationTests {
 		assertThat(created.size()).isEqualTo(fetched.size());
 		assertThat(sizeOfB(created)).isEqualTo(sizeOfB(fetched));
 		assertThat(sizeOfC(created)).isEqualTo(sizeOfC(fetched));
+		assertThat(sizeOfD(created)).isEqualTo(sizeOfD(fetched));
 	}
 
 	@Test
@@ -68,19 +69,28 @@ class NplusoneApplicationTests {
 		assertThat(created.size()).isEqualTo(fetched.size());
 		assertThat(sizeOfB(created)).isEqualTo(sizeOfB(fetched));
 		assertThat(sizeOfC(created)).isEqualTo(sizeOfC(fetched));
+		assertThat(sizeOfD(created)).isEqualTo(sizeOfD(fetched));
 	}
 
-	private int sizeOfB(List<A> created) {
+	private long sizeOfB(List<A> created) {
 		return created.stream()
 				.flatMap(a -> a.getListOfB().stream())
-				.collect(Collectors.toList()).size();
+				.count();
 	}
 
-	private int sizeOfC(List<A> created) {
+	private long sizeOfC(List<A> created) {
 		return created.stream()
 				.flatMap(a -> a.getListOfB().stream())
 				.flatMap(b -> b.getListOfC().stream())
-				.collect(Collectors.toList()).size();
+				.count();
+	}
+
+	private long sizeOfD(List<A> created) {
+		return created.stream()
+				.flatMap(a -> a.getListOfB().stream())
+				.flatMap(b -> b.getListOfC().stream())
+				.flatMap(c -> c.getListOfD().stream())
+				.count();
 	}
 
 	@TestConfiguration
