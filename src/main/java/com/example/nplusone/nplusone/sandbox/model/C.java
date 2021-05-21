@@ -1,6 +1,8 @@
 package com.example.nplusone.nplusone.sandbox.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class C {
@@ -11,6 +13,9 @@ public class C {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private B parentB;
+
+    @ManyToMany(mappedBy = "listOfC", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<D> listOfD = new HashSet<>();
 
     public C() {
     }
@@ -31,7 +36,16 @@ public class C {
         return parentB;
     }
 
+    public Set<D> getListOfD() {
+        return listOfD;
+    }
+
     public void setParentB(B parentB) {
         this.parentB = parentB;
+    }
+
+    public void addD(D d) {
+        listOfD.add(d);
+        d.addC(this);
     }
 }

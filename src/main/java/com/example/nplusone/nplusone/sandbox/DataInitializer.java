@@ -3,6 +3,7 @@ package com.example.nplusone.nplusone.sandbox;
 import com.example.nplusone.nplusone.sandbox.model.A;
 import com.example.nplusone.nplusone.sandbox.model.B;
 import com.example.nplusone.nplusone.sandbox.model.C;
+import com.example.nplusone.nplusone.sandbox.model.D;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,9 +52,22 @@ public class DataInitializer {
     }
 
     private List<C> createCList(B b, int count) {
+        final List<C> listOfC = rangeClosed(0, count)
+                .boxed()
+                .map(a -> {
+                    List<D> listOfD = createDList(count);
+                    C c = new C(b);
+                    listOfD.forEach(c::addD);
+                    return c;
+                })
+                .collect(toList());
+        return listOfC;
+    }
+
+    private List<D> createDList(int count) {
         return rangeClosed(0, count)
                 .boxed()
-                .map(a -> new C(b))
+                .map(d -> new D())
                 .collect(toList());
     }
 }
