@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.rangeClosed;
@@ -30,38 +31,49 @@ public class DataInitializer {
     private List<A> createAList(int count) {
         return rangeClosed(1, count)
                 .boxed()
-                .map(num -> {
-                    A a = new A();
-                    List<B> bList = createBList(a, count);
-                    a.setListOfB(bList);
-                    return a;
-                })
+                .map(createA(count))
                 .collect(toList());
+    }
+
+    private Function<Integer, A> createA(int count) {
+        return num -> {
+            A a = new A();
+            List<B> bList = createBList(a, count);
+            a.setListOfB(bList);
+            return a;
+        };
     }
 
     private List<B> createBList(A a, int count) {
         return rangeClosed(1, count)
                 .boxed()
-                .map(num -> {
-                    B b = new B(a);
-                    List<C> cList = createCList(b, count);
-                    b.setListOfC(cList);
-                    return b;
-                })
+                .map(createB(a, count))
                 .collect(toList());
     }
 
+    private Function<Integer, B> createB(A a, int count) {
+        return num -> {
+            B b = new B(a);
+            List<C> cList = createCList(b, count);
+            b.setListOfC(cList);
+            return b;
+        };
+    }
+
     private List<C> createCList(B b, int count) {
-        final List<C> listOfC = rangeClosed(1, count)
+        return rangeClosed(1, count)
                 .boxed()
-                .map(a -> {
-                    List<D> listOfD = createDList(count);
-                    C c = new C(b);
-                    listOfD.forEach(c::addD);
-                    return c;
-                })
+                .map(createC(b, count))
                 .collect(toList());
-        return listOfC;
+    }
+
+    private Function<Integer, C> createC(B b, int count) {
+        return num -> {
+            List<D> listOfD = createDList(count);
+            C c = new C(b);
+            listOfD.forEach(c::addD);
+            return c;
+        };
     }
 
     private List<D> createDList(int count) {
