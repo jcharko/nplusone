@@ -5,7 +5,6 @@ import com.example.nplusone.nplusone.sandbox.model.B;
 import com.example.nplusone.nplusone.sandbox.model.C;
 import com.example.nplusone.nplusone.sandbox.model.D;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
