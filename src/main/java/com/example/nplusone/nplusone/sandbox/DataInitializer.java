@@ -22,6 +22,8 @@ public class DataInitializer {
         this.aRepository = aRepository;
     }
 
+
+    // Nothing special here, creating test data for future fetching
     @Transactional
     public List<A> prepareData(int count) {
         return aRepository.saveAll(createAList(count));
