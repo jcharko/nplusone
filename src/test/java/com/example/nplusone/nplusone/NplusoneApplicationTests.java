@@ -48,7 +48,7 @@ class NplusoneApplicationTests {
 
 		List<A> fetched = dataFetchSandbox.fetchDataNPlusOneProblem();
 
-		assertThat(proxyDataSource.getQueryExecutions().size()).isEqualTo(259);
+		assertThat(proxyDataSource.getQueryExecutions().size()).isEqualTo(156);
 		assertThat(created.size()).isEqualTo(fetched.size());
 		assertThat(sizeOfB(created)).isEqualTo(sizeOfB(fetched));
 		assertThat(sizeOfC(created)).isEqualTo(sizeOfC(fetched));

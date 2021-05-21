@@ -28,7 +28,7 @@ public class DataInitializer {
     }
 
     private List<A> createAList(int count) {
-        return rangeClosed(0, count)
+        return rangeClosed(1, count)
                 .boxed()
                 .map(num -> {
                     A a = new A();
@@ -40,7 +40,7 @@ public class DataInitializer {
     }
 
     private List<B> createBList(A a, int count) {
-        return rangeClosed(0, count)
+        return rangeClosed(1, count)
                 .boxed()
                 .map(num -> {
                     B b = new B(a);
@@ -52,7 +52,7 @@ public class DataInitializer {
     }
 
     private List<C> createCList(B b, int count) {
-        final List<C> listOfC = rangeClosed(0, count)
+        final List<C> listOfC = rangeClosed(1, count)
                 .boxed()
                 .map(a -> {
                     List<D> listOfD = createDList(count);
@@ -65,7 +65,7 @@ public class DataInitializer {
     }
 
     private List<D> createDList(int count) {
-        return rangeClosed(0, count)
+        return rangeClosed(1, count)
                 .boxed()
                 .map(d -> new D())
                 .collect(toList());
