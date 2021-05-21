@@ -26,10 +26,14 @@ public class DataFetchSandbox {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<A> fetchDataNPlusOneProblem() {
         List<A> all = aRepository.findAll();
+
+        // No related data in L1 cache so additional selects will be fired
         fakeInitializationWhichCouldFireAdditionalSelects(all);
+
         return all;
     }
 
+    // can be for example mapping entity to dto
     private void fakeInitializationWhichCouldFireAdditionalSelects(List<A> all) {
         for (A a : all) {
             for (B b : a.getListOfB()) {
@@ -44,9 +48,16 @@ public class DataFetchSandbox {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<A> fetchDataWithoutNPlusOneProblem() {
+        // Fetching main object list
         List<A> listOfA = aRepository.findWithB();
+
+        // Fetching relation list with previously fetched data in where in clause
         List<B> listOfB = bRepository.findByA(listOfA);
+
+        // Fetching relation list with previously fetched data in where in clause
         cRepository.findWithD(listOfB);
+
+        // All data is in L1 cache so operation above will NOT fire additional selects
         fakeInitializationWhichCouldFireAdditionalSelects(listOfA);
         return listOfA;
 
