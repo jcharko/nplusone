@@ -57,7 +57,7 @@ public class DataFetchSandbox {
         // Fetching relation list with previously fetched data in where in clause
         cRepository.findWithD(listOfB);
 
-        // All data is in L1 cache so operation above will NOT fire additional selects
+        // All data is in L1 cache so operation below will NOT fire additional selects
         fakeInitializationWhichCouldFireAdditionalSelects(listOfA);
         return listOfA;
 
