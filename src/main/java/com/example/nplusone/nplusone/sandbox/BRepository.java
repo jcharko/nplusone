@@ -10,5 +10,5 @@ import java.util.List;
 public interface BRepository extends JpaRepository<B, Integer> {
 
     @Query("select distinct entity from B entity join fetch entity.listOfC where entity.parentA in (:listOfA)")
-    List<B> findByA(List<A> listOfA);
+    List<B> findWithCByA(List<A> listOfA);
 }

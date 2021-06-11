@@ -13,5 +13,5 @@ public interface CRepository extends JpaRepository<C, Integer> {
            "from C entity " +
            "join fetch entity.listOfD ld " +
            "where entity.parentB in (:listOfB)")
-    List<C> findWithD(List<B> listOfB);
+    List<C> findWithDByB(List<B> listOfB);
 }

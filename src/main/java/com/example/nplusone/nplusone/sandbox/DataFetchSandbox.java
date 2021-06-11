@@ -51,10 +51,10 @@ public class DataFetchSandbox {
         List<A> listOfA = aRepository.findWithB();
 
         // Fetching relation list with previously fetched data in where in clause
-        List<B> listOfB = bRepository.findByA(listOfA);
+        List<B> listOfB = bRepository.findWithCByA(listOfA);
 
         // Fetching relation list with previously fetched data in where in clause
-        cRepository.findWithD(listOfB);
+        cRepository.findWithDByB(listOfB);
 
         // All data is in L1 cache so operation below will NOT fire additional selects
         fakeInitializationWhichCouldFireAdditionalSelects(listOfA);
